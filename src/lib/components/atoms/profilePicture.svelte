@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import { PUBLIC_BASE_URL } from '$env/static/public';
-	export let src: string = PUBLIC_BASE_URL + '/assets/default-user.svg';
+	export let src: string = '/assets/default-user.svg';
 	export let alt: string = 'Este usuario no tiene foto de perfil.';
 
 	const dispatch = createEventDispatcher();
