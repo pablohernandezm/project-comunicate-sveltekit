@@ -7,5 +7,5 @@ export const GET = async ({ url, locals: { supabase, getSession } }) => {
         supabase.auth.signOut();
     }
 
-    throw redirect(303, "/login");
+    throw redirect(303, "/access");
 };
