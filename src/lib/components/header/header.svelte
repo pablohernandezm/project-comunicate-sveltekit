@@ -4,7 +4,7 @@
 	import Notification from '$lib/components/atoms/notification.svelte';
 	import ProfilePicture from '$lib/components/atoms/profilePicture.svelte';
 
-	export let loggedIn = true;
+	export let loggedIn = false;
 
 	type Link = {
 		url: string;
@@ -16,10 +16,10 @@
 
 	if (loggedIn) {
 		menuOptions.push({ url: '/profile', text: 'Perfil', img: '/assets/profile.svg' });
-		menuOptions.push({ url: '/logout', text: 'Cerrar sesión', img: '/assets/logout.svg' });
 	} else {
-		menuOptions.push({ url: '/login', text: 'Acceder', img: '/assets/login.svg' });
 	}
+	menuOptions.push({ url: '/login', text: 'Acceder', img: '/assets/login.svg' });
+	menuOptions.push({ url: '/logout', text: 'Cerrar sesión', img: '/assets/logout.svg' });
 
 	let menuOpen = false;
 	let menu: HTMLDivElement;
