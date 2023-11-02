@@ -1,7 +1,7 @@
 // src/hooks.server.ts
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public'
 import { createSupabaseServerClient } from '@supabase/auth-helpers-sveltekit'
-import type { Handle } from '@sveltejs/kit'
+import { redirect, type Handle } from '@sveltejs/kit'
 
 export const handle: Handle = async ({ event, resolve }) => {
     event.locals.supabase = createSupabaseServerClient({
@@ -10,11 +10,6 @@ export const handle: Handle = async ({ event, resolve }) => {
         event,
     })
 
-    /**
-     * a little helper that is written for convenience so that instead
-     * of calling `const { data: { session } } = await supabase.auth.getSession()`
-     * you just call this `await getSession()`
-     */
     event.locals.getSession = async () => {
         const {
             data: { session },
@@ -22,7 +17,14 @@ export const handle: Handle = async ({ event, resolve }) => {
         return session
     }
 
-    return resolve(event, {
+    // Protección de rutas
+    if (event.url.pathname.startsWith('/app')) {
+        if (! await event.locals.getSession()) {
+            throw redirect(303, '/access')
+        }
+    }
+
+    return await resolve(event, {
         filterSerializedResponseHeaders(name) {
             return name === 'content-range'
         },

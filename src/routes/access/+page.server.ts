@@ -12,7 +12,7 @@ export const actions: Actions = {
             email,
             password,
             options: {
-                emailRedirectTo: `${url.origin}/auth/callback`,
+                emailRedirectTo: `${url.origin}/access/auth/callback`,
             },
         })
 
