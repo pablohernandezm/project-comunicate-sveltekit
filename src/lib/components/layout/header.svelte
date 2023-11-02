@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import Icon from '$lib/components/atoms/logo.svelte';
-	import Notification from '$lib/components/atoms/notification.svelte';
-	import ProfilePicture from '$lib/components/atoms/profilePicture.svelte';
+	import Icon from '$lib/components/utils/logo.svelte';
+	import Notification from '$lib/components/utils/notification.svelte';
+	import ProfilePicture from '$lib/components/utils/profilePicture.svelte';
 
 	export let loggedIn = false;
 
@@ -16,7 +16,6 @@
 
 	if (loggedIn) {
 		menuOptions.push({ url: '/profile', text: 'Perfil', img: '/assets/profile.svg' });
-		menuOptions.push({ url: '/logout', text: 'Cerrar sesión', img: '/assets/logout.svg' });
 	} else {
 		menuOptions.push({ url: '/access', text: 'Acceder', img: '/assets/login.svg' });
 	}
@@ -44,7 +43,7 @@
 
 <header>
 	<div class="hero">
-		<Icon style="filled" color="gradient" />
+		<a href="/"> <Icon style="filled" color="gradient" /></a>
 	</div>
 
 	<div class="actions">
@@ -52,28 +51,35 @@
 		<ProfilePicture on:click={toggleMenu} />
 	</div>
 
-	{#if menuOpen}
-		<div class="menu" bind:this={menu}>
-			{#if loggedIn}
-				<div class="menu-info">
-					<ProfilePicture rounded={false} />
-					<ul class="menu-info-data">
-						<li class="user-name">Pablo Hernández</li>
-						<li class="user-email"><small>phernandezm07@gmail.com</small></li>
-					</ul>
-				</div>
-			{/if}
+	<div class="menu {menuOpen ? '' : 'menuHidden'}" bind:this={menu}>
+		{#if loggedIn}
+			<div class="menu-info">
+				<ProfilePicture rounded={false} />
+				<ul class="menu-info-data">
+					<li class="user-name">Pablo Hernández</li>
+					<li class="user-email"><small>phernandezm07@gmail.com</small></li>
+				</ul>
+			</div>
+		{/if}
 
-			<ul class="menu-options">
-				{#each menuOptions as option}
-					<li class="menu-option">
-						<img src={option.img} alt={option.text} />
-						<a href={option.url}>{option.text}</a>
-					</li>
-				{/each}
-			</ul>
-		</div>
-	{/if}
+		<ul class="menu-options">
+			{#each menuOptions as option}
+				<li class="menu-option">
+					<img src={option.img} alt={option.text} />
+					<a href={option.url}>{option.text}</a>
+				</li>
+			{/each}
+
+			{#if loggedIn}
+				<li class="menu-option">
+					<img src="/assets/logout.svg" alt="" />
+					<form method="post" action="/access/logout">
+						<button type="submit">Cerrar sesión</button>
+					</form>
+				</li>
+			{/if}
+		</ul>
+	</div>
 </header>
 
 <style>
@@ -115,12 +121,20 @@
 		top: 100%;
 	}
 
+	.menuHidden {
+		display: none;
+	}
+
 	.menu > * {
 		padding-inline: 1.5rem;
 	}
 
-	a {
+	a,
+	button {
 		color: var(--text-title-color);
+		background: none;
+		border: none;
+		padding: 0;
 	}
 
 	.menu-info {

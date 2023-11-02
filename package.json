@@ -29,7 +29,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@supabase/auth-helpers-sveltekit": "^0.10.4",
+		"@supabase/auth-helpers-sveltekit": "^0.10.5",
 		"@supabase/supabase-js": "^2.38.4",
 		"modern-normalize": "^2.0.0"
 	}

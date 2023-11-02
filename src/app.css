@@ -1,12 +1,21 @@
 :root {
     --brand-color: #FD576B;
     --text-title-color: #002C3F;
+    --success-color: #10815B;
+    --failure-color: #CB232E;
+    --brand-gradient: radial-gradient(circle, #d65fc2, #e459b3, #ef54a3, #f65292, #fb5281, #ff5974, #ff6167, #ff6b5b, #ff7b50, #ff8c45, #ff9e3b, #ffb033);
 }
 
 button {
     background: none;
     border: none;
     padding: 0;
+}
+
+button[type="submit"] {
+    background-color: var(--brand-color);
+    padding: 0.5rem 1rem;
+    color: white;
 }
 
 button,
