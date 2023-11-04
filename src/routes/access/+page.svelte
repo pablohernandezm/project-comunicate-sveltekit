@@ -27,12 +27,29 @@
 
 		<form method="post" {action} use:enhance>
 			<input
+				type="text"
+				name="fullname"
+				id="fullname"
+				value={form?.fullname ?? ''}
+				placeholder="Nombre completo"
+				data-content="Nombre completo"
+				required
+				minlength="3"
+			/>
+			<input
 				name="email"
 				value={form?.email ?? ''}
 				placeholder="Correo electrónico"
 				data-content="Correo electrónico"
+				required
 			/>
-			<input type="password" name="password" placeholder="Contraseña" data-content="Contraseña" />
+			<input
+				type="password"
+				name="password"
+				placeholder="Contraseña"
+				data-content="Contraseña"
+				required
+			/>
 			<button type="submit">Continuar</button>
 		</form>
 

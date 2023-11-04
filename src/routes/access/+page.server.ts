@@ -5,6 +5,8 @@ import { fail, type Actions, redirect, error } from '@sveltejs/kit'
 export const actions: Actions = {
     register: async ({ request, url, locals: { supabase } }) => {
         const formData = await request.formData()
+
+        const fullname = formData.get('fullname') as string;
         const email = formData.get('email') as string
         const password = formData.get('password') as string
 
@@ -13,14 +15,17 @@ export const actions: Actions = {
             password,
             options: {
                 emailRedirectTo: `${url.origin}/access/auth/callback`,
+                data: {
+                    full_name: fullname,
+                }
             },
         })
 
         if (error) {
             if (error.status === 400) {
-                return fail(400, { message: 'Correo o contraseña inválidos', success: false, email })
+                return fail(400, { message: 'Correo o contraseña inválidos', success: false, fullname, email })
             }
-            return fail(500, { message: 'Error del servidor. Inténtalo de nuevo más tarde.', success: false, email })
+            return fail(500, { message: 'Error del servidor. Inténtalo de nuevo más tarde.', success: false, fullname, email })
         }
 
         return {

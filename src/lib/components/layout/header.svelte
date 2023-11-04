@@ -5,6 +5,7 @@
 	import ProfilePicture from '$lib/components/utils/profilePicture.svelte';
 
 	export let loggedIn = false;
+	export let userId;
 
 	type Link = {
 		url: string;
@@ -15,7 +16,7 @@
 	let menuOptions: Link[] = [];
 
 	if (loggedIn) {
-		menuOptions.push({ url: '/profile', text: 'Perfil', img: '/assets/profile.svg' });
+		menuOptions.push({ url: '/app/profile/' + userId, text: 'Perfil', img: '/assets/profile.svg' });
 	} else {
 		menuOptions.push({ url: '/access', text: 'Acceder', img: '/assets/login.svg' });
 	}

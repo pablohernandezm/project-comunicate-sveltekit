@@ -20,5 +20,5 @@
 	});
 </script>
 
-<Header loggedIn={data.session ? true : false} />
+<Header loggedIn={data.session ? true : false} userId={data.session?.user.id} />
 <slot />
