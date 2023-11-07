@@ -5,7 +5,8 @@
 	import ProfilePicture from '$lib/components/utils/profilePicture.svelte';
 
 	export let loggedIn = false;
-	export let userId;
+	export let userId: string;
+	export let avatarUrl: string;
 
 	type Link = {
 		url: string;
@@ -16,7 +17,11 @@
 	let menuOptions: Link[] = [];
 
 	if (loggedIn) {
-		menuOptions.push({ url: '/app/profile/' + userId, text: 'Perfil', img: '/assets/profile.svg' });
+		menuOptions.push({
+			url: '/app/profile/' + userId,
+			text: 'Perfil',
+			img: '/assets/profile.svg'
+		});
 	} else {
 		menuOptions.push({ url: '/access', text: 'Acceder', img: '/assets/login.svg' });
 	}
@@ -48,14 +53,14 @@
 	</div>
 
 	<div class="actions">
-		<Notification color="gradient" style="filled" />
-		<ProfilePicture on:click={toggleMenu} />
+		<Notification color="gradient" style="default" />
+		<ProfilePicture on:click={toggleMenu} src={avatarUrl} />
 	</div>
 
 	<div class="menu {menuOpen ? '' : 'menuHidden'}" bind:this={menu}>
 		{#if loggedIn}
 			<div class="menu-info">
-				<ProfilePicture rounded={false} />
+				<img class="avatar" src={avatarUrl} alt="Avatar" />
 				<ul class="menu-info-data">
 					<li class="user-name">Pablo Hernández</li>
 					<li class="user-email"><small>phernandezm07@gmail.com</small></li>
@@ -139,9 +144,10 @@
 	}
 
 	.menu-info {
-		display: grid;
+		display: flex;
 		gap: 2ch;
-		grid-template-columns: min-content 1fr;
+		flex-direction: row;
+		height: 2.5rem;
 	}
 
 	.menu-options {
@@ -151,10 +157,23 @@
 		gap: 5px;
 	}
 
+	img {
+		height: 1rem;
+		aspect-ratio: 1/1;
+	}
+
 	.menu-option {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 		gap: 1ch;
+		overflow: hidden;
+	}
+
+	.avatar {
+		height: 100%;
+		aspect-ratio: 1/1;
+		object-fit: cover;
+		border-radius: 100%;
 	}
 </style>

@@ -30,3 +30,18 @@ ul {
     padding: 0;
     margin: 0;
 }
+
+.message,
+.error {
+    padding: 0.5rem 1rem;
+    text-align: start;
+    color: white;
+}
+
+.message {
+    background-color: var(--success-color);
+}
+
+.error {
+    background-color: var(--failure-color);
+}

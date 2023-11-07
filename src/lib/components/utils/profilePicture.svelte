@@ -21,7 +21,6 @@
 
 <style>
 	button {
-		height: 100%;
 		aspect-ratio: 1/1;
 		background-color: white;
 		display: flex;
@@ -30,8 +29,10 @@
 	}
 
 	img {
-		height: 100%;
 		aspect-ratio: 1/1;
+		border-radius: 100%;
+		height: 100%;
 		object-fit: cover;
+		width: 100%;
 	}
 </style>

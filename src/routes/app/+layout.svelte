@@ -2,10 +2,15 @@
 	import { invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import Header from '$lib/components/layout/header.svelte';
+	import type { LayoutData } from './$types';
 
-	export let data;
-	let { supabase } = data;
-	$: ({ supabase } = data);
+	export let data: LayoutData;
+	let { supabase, profile } = data;
+	$: ({ supabase, profile } = data);
+
+	$: avatarUrl = profile?.avatar_url
+		? supabase.storage.from('avatars').getPublicUrl(profile.avatar_url).data.publicUrl
+		: '/assets/default-user.svg';
 
 	onMount(() => {
 		const {
@@ -20,5 +25,5 @@
 	});
 </script>
 
-<Header loggedIn={data.session ? true : false} userId={data.session?.user.id} />
+<Header loggedIn={data.session ? true : false} userId={data.session?.user.id} {avatarUrl} />
 <slot />

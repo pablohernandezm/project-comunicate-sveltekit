@@ -26,16 +26,18 @@
 		{/if}
 
 		<form method="post" {action} use:enhance>
-			<input
-				type="text"
-				name="fullname"
-				id="fullname"
-				value={form?.fullname ?? ''}
-				placeholder="Nombre completo"
-				data-content="Nombre completo"
-				required
-				minlength="3"
-			/>
+			{#if !loggingIn}
+				<input
+					type="text"
+					name="fullname"
+					id="fullname"
+					value={form?.fullname ?? ''}
+					placeholder="Nombre completo"
+					data-content="Nombre completo"
+					required
+					minlength="3"
+				/>
+			{/if}
 			<input
 				name="email"
 				value={form?.email ?? ''}
@@ -78,6 +80,7 @@
 		place-items: center;
 		flex-direction: column;
 		padding-inline: 40px;
+		padding-block: 2rem;
 	}
 
 	div:not(.logoContainer) {
@@ -97,24 +100,5 @@
 
 	input {
 		padding: 0.5rem 1rem;
-	}
-
-	.message,
-	.error {
-		padding: 0.5rem 1rem;
-		text-align: start;
-		color: white;
-	}
-
-	.message {
-		background-color: var(--success-color);
-	}
-
-	.error {
-		background-color: var(--failure-color);
-	}
-
-	h1 {
-		text-transform: uppercase;
 	}
 </style>
