@@ -13,13 +13,26 @@ export const actions: Actions = {
             throw redirect(303, '/access');
         }
 
-        const { error } = await supabase.from('profiles').upsert({
-            avatar_url: avatarUrl,
+        interface Changes {
+            biography: string,
+            full_name: string,
+            id: string,
+            updated_at: string,
+            avatar_url?: string,
+        }
+
+        const changes: Changes = {
             biography: biography,
             full_name: fullName,
             id: session.user.id,
             updated_at: new Date().toISOString(),
-        })
+        }
+
+        if (avatarUrl) {
+            changes.avatar_url = avatarUrl
+        }
+
+        const { error } = await supabase.from('profiles').upsert(changes)
 
         if (error) {
             return fail(500, {

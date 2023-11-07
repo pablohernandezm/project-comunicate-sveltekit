@@ -16,16 +16,18 @@
 	let biography = data.profile?.biography;
 
 	const beforeSubmision: SubmitFunction = async ({ formData, cancel }) => {
-		let extension = files[0].name.split('.').pop();
-		let filePath = `${crypto.randomUUID()}.${extension}`;
+		if (files) {
+			let extension = files[0].name.split('.').pop();
+			let filePath = `${crypto.randomUUID()}.${extension}`;
 
-		const { error } = await supabase.storage.from('avatars').upload(filePath, files[0]);
+			const { error } = await supabase.storage.from('avatars').upload(filePath, files[0]);
 
-		if (error) {
-			console.error(error, filePath);
-			cancel();
-		} else {
-			formData.set('avatarUrl', filePath);
+			if (error) {
+				console.error(error, filePath);
+				cancel();
+			} else {
+				formData.set('avatarUrl', filePath);
+			}
 		}
 
 		return async ({ result, update }) => {
@@ -42,6 +44,10 @@
 
 			await update({ reset: false, invalidateAll: true });
 		};
+	};
+
+	const newMessage = (node: HTMLElement) => {
+		node.focus();
 	};
 
 	$: avatarUrl = data.profile?.avatar_url
@@ -82,7 +88,6 @@
 								accept="image/png, image/jpeg"
 								bind:files
 								disabled={uploading}
-								required
 							/>
 
 							<span class="file-selection">
@@ -111,11 +116,11 @@
 				</div>
 
 				{#if form?.success}
-					<p class="message">{form.message}</p>
+					<p class="message" use:newMessage>{form.message}</p>
 				{:else if form?.success == false}
-					<p class="error">{form?.message}</p>
+					<p class="error" use:newMessage>{form?.message}</p>
 				{:else if avatarError}
-					<p class="error">{avatarError.message}</p>
+					<p class="error" use:newMessage>{avatarError.message}</p>
 				{/if}
 
 				<button type="submit">Guardar cambios</button>
