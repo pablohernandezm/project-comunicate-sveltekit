@@ -8,7 +8,8 @@
 
 	let files: FileList;
 	let uploading: boolean;
-	let avatarError: Error | null;
+	let errorMessage: string | null;
+	let successMessage: string | null;
 
 	let supabase = data.supabase;
 
@@ -23,7 +24,7 @@
 			const { error } = await supabase.storage.from('avatars').upload(filePath, files[0]);
 
 			if (error) {
-				console.error(error, filePath);
+				errorMessage = 'No se pudo publicar el nuevo avatar.';
 				cancel();
 			} else {
 				formData.set('avatarUrl', filePath);
@@ -33,10 +34,10 @@
 		return async ({ result, update }) => {
 			switch (result.type) {
 				case 'success':
-					alert('Update realizado con éxito');
+					successMessage = 'Perfil actualizado.';
 					break;
 				case 'failure':
-					alert('Un error ha ocurrido al actualizar los resultados.');
+					errorMessage = 'Un error ha ocurrido al actualizar los datos.';
 					break;
 				default:
 					break;
@@ -117,10 +118,12 @@
 
 				{#if form?.success}
 					<p class="message" use:newMessage>{form.message}</p>
+				{:else if successMessage}
+					<p class="message" use:newMessage>{successMessage}</p>
 				{:else if form?.success == false}
 					<p class="error" use:newMessage>{form?.message}</p>
-				{:else if avatarError}
-					<p class="error" use:newMessage>{avatarError.message}</p>
+				{:else if errorMessage}
+					<p class="error" use:newMessage>{errorMessage}</p>
 				{/if}
 
 				<button type="submit">Guardar cambios</button>
