@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import MediaIcon from '$lib/components/utils/media.svelte';
+	import MediaIcon from '$lib/components/atoms/media.svelte';
 	import type { SubmitFunction } from './$types.js';
 
 	export let data;
@@ -136,7 +136,6 @@
 	main,
 	.container,
 	.profile-data,
-	.form-container,
 	form,
 	form > div,
 	.file-selector {
@@ -225,13 +224,6 @@
 		-webkit-line-clamp: 4;
 		text-align: center;
 		text-wrap: balance;
-	}
-
-	.form-container {
-		padding: 1rem;
-		border: dashed 1px gray;
-		border-radius: 10px;
-		gap: 2rem;
 	}
 
 	h2 {

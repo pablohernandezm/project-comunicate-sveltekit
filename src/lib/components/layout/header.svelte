@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import Icon from '$lib/components/utils/logo.svelte';
-	import Notification from '$lib/components/utils/notification.svelte';
-	import ProfilePicture from '$lib/components/utils/profilePicture.svelte';
+	import Icon from '$lib/components/atoms/logo.svelte';
+	import Notification from '$lib/components/atoms/notification.svelte';
+	import ProfilePicture from '$lib/components/atoms/profilePicture.svelte';
 
 	export let loggedIn = false;
 	export let userId: string;
@@ -49,7 +49,7 @@
 
 <header>
 	<div class="hero">
-		<a href="/"> <Icon style="filled" color="gradient" /></a>
+		<a href="/" aria-label="Inicio"> <Icon style="filled" color="gradient" /></a>
 	</div>
 
 	<div class="actions">

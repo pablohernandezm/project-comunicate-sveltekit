@@ -6,6 +6,10 @@
     --brand-gradient: radial-gradient(circle, #d65fc2, #e459b3, #ef54a3, #f65292, #fb5281, #ff5974, #ff6167, #ff6b5b, #ff7b50, #ff8c45, #ff9e3b, #ffb033);
 }
 
+h2 {
+    margin: 0;
+}
+
 button {
     background: none;
     border: none;
@@ -44,4 +48,24 @@ ul {
 
 .error {
     background-color: var(--failure-color);
+}
+
+.title {
+    text-transform: uppercase;
+    color: var(--text-title-color);
+}
+
+.color-brand {
+    color: var(--brand-color);
+}
+
+dialog {
+    border: none;
+    box-shadow: gray 1px 1px 2px;
+    border-radius: 10px;
+    padding: 2rem;
+}
+
+dialog::backdrop {
+    backdrop-filter: blur(5px);
 }

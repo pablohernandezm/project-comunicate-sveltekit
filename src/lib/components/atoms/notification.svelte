@@ -3,7 +3,7 @@
 	export let style: 'default' | 'filled' = 'default';
 </script>
 
-<button type="button">
+<button type="button" aria-label="Notificaciones">
 	{#if style === 'default'}
 		{#if color === 'gradient'}
 			<svg
