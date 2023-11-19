@@ -25,5 +25,11 @@
 	});
 </script>
 
-<Header loggedIn={data.session ? true : false} userId={data.session?.user.id} {avatarUrl} />
+<Header
+	loggedIn={data.session ? true : false}
+	userId={data.session?.user.id}
+	{avatarUrl}
+	userName={profile?.full_name ?? ''}
+	email={data.session?.user.email ?? ''}
+/>
 <slot />

@@ -6,6 +6,8 @@
 
 	export let loggedIn = false;
 	export let userId: string;
+	export let userName: string;
+	export let email: string;
 	export let avatarUrl: string;
 
 	type Link = {
@@ -62,8 +64,8 @@
 			<div class="menu-info">
 				<img class="avatar" src={avatarUrl} alt="Avatar" />
 				<ul class="menu-info-data">
-					<li class="user-name">Pablo Hernández</li>
-					<li class="user-email"><small>phernandezm07@gmail.com</small></li>
+					<li class="user-name">{userName}</li>
+					<li class="user-email"><small>{email}</small></li>
 				</ul>
 			</div>
 		{/if}
