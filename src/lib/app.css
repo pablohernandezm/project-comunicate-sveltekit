@@ -1,9 +1,14 @@
 :root {
-    --brand-color: #FD576B;
-    --text-title-color: #002C3F;
+    --surfice-color: white;
+    --brand-color: hsl(353, 98%, 67%);
+    --text-title-color: hsl(198, 100%, 12%);
     --success-color: #10815B;
-    --failure-color: #CB232E;
+    --failure-color: hsl(356, 71%, 47%);
     --brand-gradient: radial-gradient(circle, #d65fc2, #e459b3, #ef54a3, #f65292, #fb5281, #ff5974, #ff6167, #ff6b5b, #ff7b50, #ff8c45, #ff9e3b, #ffb033);
+}
+
+body {
+    background-color: hsla(0, 0%, 0%, 5%);
 }
 
 h2 {

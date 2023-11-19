@@ -103,7 +103,8 @@
 		padding-inline: 2rem;
 		align-items: center;
 		position: relative;
-		border-bottom: 1px solid gray;
+		background-color: var(--surfice-color);
+		box-shadow: 0 2px 5px 1px hsla(0, 0%, 0%, 10%);
 	}
 
 	.hero {

@@ -169,7 +169,7 @@
 		</form>
 	</dialog>
 
-	<div class="page-session">
+	<div class="page-section">
 		<h2 class="title">Tus comunidades</h2>
 		{#if comunities}
 			<div class="comunities">
@@ -190,7 +190,7 @@
 			</div>
 		{/if}
 	</div>
-	<div class="page-session">
+	<div class="page-section">
 		<h2 class="title">Pendientes por aceptar</h2>
 	</div>
 </main>
@@ -273,5 +273,11 @@
 		gap: 1rem;
 		padding: 1rem;
 		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	}
+
+	.page-section {
+		background-color: var(--surfice-color);
+		padding: 1rem;
+		border-radius: 10px;
 	}
 </style>
