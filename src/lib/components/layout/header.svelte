@@ -107,6 +107,7 @@
 		position: relative;
 		background-color: var(--surfice-color);
 		box-shadow: 0 2px 5px 1px hsla(0, 0%, 0%, 10%);
+		z-index: 1000;
 	}
 
 	.hero {
