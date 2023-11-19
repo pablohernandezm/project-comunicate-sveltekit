@@ -50,7 +50,7 @@
 
 			const { count: members, error: counterError } = await supabase
 				.from('user_comunity_rel')
-				.select('*', { count: 'exact' })
+				.select('*', { count: 'exact', head: true })
 				.eq('comunity_id', comunityID)
 				.single();
 			if (counterError || !members) {
