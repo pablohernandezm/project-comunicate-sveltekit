@@ -1,23 +1,53 @@
 <script lang="ts">
 	import Persons from '$lib/components/atoms/persons.svelte';
-	import type { PostgrestSingleResponse } from '@supabase/supabase-js';
-	export let bannerURL: string;
-	export let name: string;
+	import type { SupabaseClient } from '@supabase/supabase-js';
+	import { onMount } from 'svelte';
 	export let id: string;
-	export let ownerAvatar: string;
-	export let members: number;
+	export let supabase: SupabaseClient;
+
+	let membersCount: number;
+	let name: string;
+	let banner: string;
+	let description: string;
+
+	async function getInfo() {
+		const { data, error } = await supabase
+			.from('comunities')
+			.select(
+				`
+		name,
+		banner,
+		description,
+		user_comunity_rel(count)`
+			)
+			.eq('id', id)
+			.single();
+
+		if (!error) {
+			membersCount = data.user_comunity_rel[0].count ?? 0;
+			banner = supabase.storage.from('banners').getPublicUrl(data.banner).data.publicUrl;
+			name = data.name;
+			description = data.description;
+		}
+	}
+
+	onMount(async () => {
+		await getInfo();
+	});
 </script>
 
 <a href="/app/comunity/{id}" class="link">
-	<div class="container" style="background-image: url({bannerURL})">
+	<div class="container" style="background-image: url({1})">
 		<header>
-			<img src={ownerAvatar} alt="Administrador." class="admin" />
+			<img src={banner} alt="Administrador." class="admin" />
 			<h2 class="title">{name}</h2>
 		</header>
 
 		<footer>
 			<Persons size={16} />
-			<small class="members_counter">{members} {members === 1 ? 'miembro' : 'miembros'}</small>
+			<small class="members_counter"
+				>{membersCount} {membersCount === 1 ? 'miembro' : 'miembros'}</small
+			>
 		</footer>
 	</div>
 </a>
@@ -72,9 +102,5 @@
 		z-index: 0;
 		display: flex;
 		flex-direction: column;
-	}
-
-	img {
-		background-color: white;
 	}
 </style>

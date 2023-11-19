@@ -9,60 +9,47 @@
 	import type { Database } from '$lib/database.types';
 	import type { PageData } from './$types';
 	import type { SubmitFunction } from './$types.js';
+	import AltComunityCard from './alt_comunity_card.svelte';
+	import { json } from '@sveltejs/kit';
 
 	export let data: PageData;
 	let supabase = data.supabase;
 
 	let dialog: HTMLDialogElement;
 	let files: FileList;
-	let comunities: Database['public']['Tables']['comunities']['Row'][] | null;
+	let comunities:
+		| {
+				banner: string;
+				created_at: string;
+				description: string;
+				id: string;
+				name: string;
+				user_comunity_rel: any;
+		  }[]
+		| null;
 
 	const getComunities = async () => {
-		const { data } = await supabase.from('comunities').select('*');
-		comunities = data;
+		const { data, error } = await supabase
+			.from('comunities')
+			.select(`*, user_comunity_rel!inner(count)`);
+
+		if (!error) {
+			comunities = data;
+		}
 	};
 
-	const getAditionalData = async (comunityID: string) => {
-		const { data: ownerID, error: ownerError } = await supabase
+	const getOwnerAvatar = async (comunity: string) => {
+		const { data, error } = await supabase
 			.from('user_comunity_rel')
-			.select('user_id')
-			.eq('comunity_id', comunityID)
+			.select(`profiles(avatar_url)`)
+			.eq('comunity_id', comunity)
 			.eq('status', 'administrator')
+			.limit(1)
 			.single();
-		if (!ownerError && ownerID && ownerID?.user_id) {
-			const { data: avatarURL, error: avatarError } = await supabase
-				.from('profiles')
-				.select('avatar_url')
-				.eq('id', ownerID.user_id)
-				.single();
 
-			if (avatarError || !avatarURL || !avatarURL.avatar_url) {
-				return null;
-			}
-
-			const { data: ownerURL } = supabase.storage
-				.from('avatars')
-				.getPublicUrl(avatarURL.avatar_url);
-
-			if (!ownerURL) {
-				return null;
-			}
-
-			const { count: members, error: counterError } = await supabase
-				.from('user_comunity_rel')
-				.select('*', { count: 'exact', head: true })
-				.eq('comunity_id', comunityID)
-				.single();
-			if (counterError || !members) {
-				return null;
-			}
-
-			return {
-				ownerURL: ownerURL.publicUrl,
-				members: members
-			};
-		} else {
-			return null;
+		console.log(data);
+		if (data && data.profiles?.avatar_url) {
+			return supabase.storage.from('avatars').getPublicUrl(data.profiles.avatar_url).data.publicUrl;
 		}
 	};
 
@@ -174,16 +161,14 @@
 		{#if comunities}
 			<div class="comunities">
 				{#each comunities as comunity}
-					{#await getAditionalData(comunity.id)}
-						<div>loading...</div>
-					{:then aditionalData}
+					{#await getOwnerAvatar(comunity.id) then ownerAvatar}
 						<ComunityCard
-							id={comunity.id}
-							name={comunity.name}
 							bannerURL={supabase.storage.from('banners').getPublicUrl(comunity.banner).data
 								.publicUrl}
-							ownerAvatar={aditionalData ? aditionalData.ownerURL : '/assets/default-user.svg'}
-							members={aditionalData ? aditionalData.members : 0}
+							name={comunity.name}
+							id={comunity.id}
+							ownerAvatar={ownerAvatar ?? '/assets/default-user.svg'}
+							members={comunity.user_comunity_rel[0].count}
 						/>
 					{/await}
 				{/each}
