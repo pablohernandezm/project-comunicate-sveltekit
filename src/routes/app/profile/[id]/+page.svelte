@@ -150,6 +150,9 @@
 
 	.container {
 		gap: 2rem;
+		background-color: white;
+		padding: 2rem;
+		border-radius: 10px;
 	}
 
 	.fullname,
@@ -169,7 +172,7 @@
 
 	.container,
 	.bibliography {
-		width: min(350px, 100%);
+		width: min(400px, 100%);
 	}
 
 	input,
@@ -255,5 +258,11 @@
 	textarea:is(:focus) {
 		border: 1px solid var(--brand-color);
 		outline: 1px solid var(--brand-color);
+	}
+
+	.form-container {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
 	}
 </style>
