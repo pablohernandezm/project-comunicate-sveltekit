@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Logo from '$lib/components/utils/logo.svelte';
+	import Logo from '$lib/components/atoms/logo.svelte';
 	import { enhance } from '$app/forms';
 	export let form;
 
