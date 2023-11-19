@@ -12,7 +12,7 @@
 </script>
 
 <main>
-	<div>
+	<div class="container">
 		<div class="logoContainer">
 			<Logo color="gradient" />
 		</div>
@@ -83,13 +83,25 @@
 		padding-block: 2rem;
 	}
 
-	div:not(.logoContainer) {
-		width: min(300px, 100%);
+	.container {
+		width: min(350px, 100%);
 		text-align: center;
+		background-color: white;
+		padding: 1rem 2rem;
+		border-radius: 10px;
+		aspect-ratio: 9/13;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
 	}
 
 	.logoContainer {
 		height: 125px;
+	}
+
+	.container > *:not(.logoContainer) {
+		width: 100%;
 	}
 
 	form {
@@ -98,7 +110,9 @@
 		gap: 1rem;
 	}
 
-	input {
+	input,
+	button {
 		padding: 0.5rem 1rem;
+		width: 100%;
 	}
 </style>
