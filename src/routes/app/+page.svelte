@@ -280,4 +280,10 @@
 		padding: 1rem;
 		border-radius: 10px;
 	}
+
+	.file-selection-text {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		width: 20ch;
+	}
 </style>
